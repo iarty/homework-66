@@ -9,9 +9,10 @@ const withLoader = (WrappedComponent, axios) => {
         loading: false,
         interceptorsId: null
       };
-      axios.interceptors.request.use(
+
+      this.state.interceptorsId = axios.interceptors.request.use(
         option => {
-          // this.setState({ loading: true });
+          this.setState({ loading: true });
           return option;
         },
         error => {
@@ -19,7 +20,8 @@ const withLoader = (WrappedComponent, axios) => {
           return error;
         }
       );
-      axios.interceptors.response.use(
+
+      this.state.interceptorsId = axios.interceptors.response.use(
         res => {
           this.setState({ loading: false });
           return res;
@@ -32,7 +34,7 @@ const withLoader = (WrappedComponent, axios) => {
     }
 
     componentWillUnmount() {
-      axios.interceptors.response.eject(this.state.interceptorId);
+      axios.interceptors.response.eject(this.state.interceptorsId);
     }
 
     render() {
